@@ -2,32 +2,178 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 222.2 84% 4.9%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 222.2 84% 4.9%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 222.2 84% 4.9%;
+
+		--primary: 222.2 47.4% 11.2%;
+		--primary-foreground: 210 40% 98%;
+
+		--secondary: 210 40% 96.1%;
+		--secondary-foreground: 222.2 47.4% 11.2%;
+
+		--muted: 210 40% 96.1%;
+		--muted-foreground: 215.4 16.3% 46.9%;
+
+		--accent: 210 40% 96.1%;
+		--accent-foreground: 222.2 47.4% 11.2%;
+
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 210 40% 98%;
+
+		--border: 214.3 31.8% 91.4%;
+		--input: 214.3 31.8% 91.4%;
+		--ring: 222.2 84% 4.9%;
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 222.2 84% 4.9%;
+		--foreground: 210 40% 98%;
+
+		--card: 222.2 84% 4.9%;
+		--card-foreground: 210 40% 98%;
+
+		--popover: 222.2 84% 4.9%;
+		--popover-foreground: 210 40% 98%;
+
+		--primary: 210 40% 98%;
+		--primary-foreground: 222.2 47.4% 11.2%;
+
+		--secondary: 217.2 32.6% 17.5%;
+		--secondary-foreground: 210 40% 98%;
+
+		--muted: 217.2 32.6% 17.5%;
+		--muted-foreground: 215 20.2% 65.1%;
+
+		--accent: 217.2 32.6% 17.5%;
+		--accent-foreground: 210 40% 98%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 210 40% 98%;
+
+		--border: 217.2 32.6% 17.5%;
+		--input: 217.2 32.6% 17.5%;
+		--ring: 212.7 26.8% 83.9%;
+	}
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.sec-com {
+	--padding-section: 4.8rem;
+	--padding-section-tl: 2.4rem;
+	--padding-section-mobile: 1.2rem;
+
+	padding: var(--padding-section) 0;
+}
+@media screen and (min-width: 1200px) {
+	.sec-com {
+		padding: var(--padding-section-tl) 0;
+	}
+}
+@media screen and (max-width: 576px) {
+	.sec-com {
+		padding: var(--padding-section-mobile) 0;
+	}
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.sec-com-tt {
+	font-size: 1.8rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+@media screen and (max-width: 1727px) {
+	.sec-com-tt {
+		font-size: 1.6rem;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.sec-com-tt {
+		font-size: 1.4rem;
+	}
+}
+
+.swiper {
+	width: 100%;
+	height: 100%;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+
+	/* Center slide text vertically */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 750px;
+	object-fit: cover;
+	transform: scale(0.9);
+	border-radius: 8px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.swiper-slide-content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: white;
+	transform: translate(50%, 50%);
+	z-index: 2;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px;
+	border-radius: 5px;
+	opacity: 0;
+	transition: all 0.3s ease-in-out;
+}
+
+.swiper-slide-content h1 {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.swiper-slide-content p {
+	font-size: 16px;
+}
+.swiper-zoom-container {
+	position: relative;
+	z-index: 1;
+}
+
+.swiper-slide.swiper-slide-active .swiper-zoom-container img {
+	transform: scale(1);
+	transition: transform 0.5s ease;
+}
+.swiper-slide.swiper-slide-active .swiper-slide-content {
+	opacity: 1;
+}
+
+.swiper-slide.swiper-slide-next .swiper-zoom-container img,
+.swiper-slide.swiper-slide-prev .swiper-zoom-container img {
+	opacity: 0.5;
+	transition: opacity 0.5s ease;
 }
