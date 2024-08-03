@@ -1,0 +1,45 @@
+.main-swiper .swiper-slide {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: unset !important;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-swiper .swiper-slide img {
+	border-radius: 8px;
+	transform: scale(1);
+	transition: transform 0.3s ease;
+}
+
+.main-swiper .swiper-slide:hover {
+	transform: scale(1.05);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thumb-swiper {
+	position: relative;
+}
+
+.thumb-swiper .swiper-slide {
+	border: 2px solid transparent;
+	transition: border-color 0.3s ease, transform 0.3s ease;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.thumb-swiper .swiper-slide-thumb-active {
+	border-color: #3b82f6;
+	border-radius: 8px;
+}
+
+.thumb-swiper .swiper-slide img {
+	border-radius: 8px;
+	transition: transform 0.3s ease;
+}
+
+.thumb-swiper .swiper-slide:hover {
+	border-color: #3b82f6;
+}

@@ -21,5 +21,7 @@ export interface Product {
   size: string;
   category: Category;
   createdAt: string;
+  loadCapacity: number;
+  engine: string;
   __v: number;
 }

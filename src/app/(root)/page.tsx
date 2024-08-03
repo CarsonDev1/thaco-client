@@ -12,6 +12,7 @@ export type CategoryName = 'Xe tải KIA' | 'Xe van thaco frontier' | 'Electroni
 export default function Home() {
 	const [electronics5Products, setElectronics5Products] = useState<Product[]>([]);
 	const [electronics6Products, setElectronics6Products] = useState<Product[]>([]);
+	const [electronics7Products, setElectronics7Products] = useState<Product[]>([]);
 	const {
 		data: products = [],
 		isLoading,
@@ -29,14 +30,19 @@ export default function Home() {
 	useEffect(() => {
 		if (products.length) {
 			const electronics5Filtered = products.filter(
-				(product) => product.category && product.category.name === 'Electronics5'
+				(product) => product.category && product.category.name === 'Xe tải KIA'
 			);
 			setElectronics5Products(electronics5Filtered);
 
 			const electronics6Filtered = products.filter(
-				(product) => product.category && product.category.name === 'Electronics6'
+				(product) => product.category && product.category.name === 'THACO FRONTIER'
 			);
 			setElectronics6Products(electronics6Filtered);
+
+			const electronics7Filtered = products.filter(
+				(product) => product.category && product.category.name === 'XE VAN THACO FRONTIER'
+			);
+			setElectronics7Products(electronics7Filtered);
 		}
 	}, [products]);
 
@@ -52,8 +58,8 @@ export default function Home() {
 		<div className='relative'>
 			<Banner />
 			<Features title='Xe tải KIA' products={electronics5Products} />
-			<Features title='Xe van thaco frontier' products={products} />
-			<Features title='Electronics6' products={electronics6Products} />
+			<Features title='Xe van thaco frontier' products={electronics7Products} />
+			<Features title='THACO FRONTIER' products={electronics6Products} />
 		</div>
 	);
 }

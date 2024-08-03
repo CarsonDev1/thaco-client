@@ -13,33 +13,43 @@ const Banner = () => {
 			<Swiper
 				spaceBetween={10}
 				slidesPerView={2}
-				onSlideChange={() => {}}
-				onSwiper={(swiper) => {}}
 				centeredSlides={true}
 				pagination={{
 					clickable: true,
 				}}
-				loop
-				modules={[Pagination]}
+				loop={true}
+				autoplay={{
+					delay: 4500,
+					disableOnInteraction: false,
+				}}
+				modules={[Pagination, Autoplay]}
+				breakpoints={{
+					850: {
+						slidesPerView: 1.5,
+					},
+					0: {
+						slidesPerView: 1,
+					},
+				}}
 			>
 				<SwiperSlide>
 					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-01.jpg' width={1500} height={900} alt='car' />
+						<Image src='/banner-car-01.jpg' width={2000} height={900} alt='car' />
 					</div>
 				</SwiperSlide>
 				<SwiperSlide>
 					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-02.jpg' width={1500} height={900} alt='car' />
+						<Image src='/banner-car-02.jpg' width={2000} height={900} alt='car' />
 					</div>
 				</SwiperSlide>
 				<SwiperSlide>
 					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-03.jpg' width={1500} height={900} alt='car' />
+						<Image src='/banner-car-03.jpg' width={2000} height={900} alt='car' />
 					</div>
 				</SwiperSlide>
 				<SwiperSlide>
 					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-02.jpg' width={1500} height={900} alt='car' />
+						<Image src='/banner-car-02.jpg' width={2000} height={900} alt='car' />
 					</div>
 				</SwiperSlide>
 			</Swiper>

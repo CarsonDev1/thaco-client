@@ -12,19 +12,15 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import Link from 'next/link';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+import { styled, alpha } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
-import { FaBell, FaCartShopping } from 'react-icons/fa6';
+import Link from 'next/link';
+import Image from 'next/image';
 import useAuth from '@/hook/useAuth';
 import envConfig from '@/utils/config';
 import { useAppContext } from '@/context/AuthProvider';
-import { styled, alpha } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
-import { Badge, BadgeProps } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Image from 'next/image';
 
 type UserData = {
 	fullname: string;
@@ -46,6 +42,9 @@ const Search = styled('div')(({ theme }) => ({
 		marginLeft: theme.spacing(3),
 		width: 'auto',
 	},
+	[theme.breakpoints.down('lg')]: {
+		marginRight: theme.spacing(1),
+	},
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -66,17 +65,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 		transition: theme.transitions.create('width'),
 		width: '100%',
 		[theme.breakpoints.up('md')]: {
-			width: '10ch',
+			width: '20ch',
 		},
-	},
-}));
-
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-	'& .MuiBadge-badge': {
-		right: -3,
-		top: 0,
-		border: `2px solid ${theme.palette.background.paper}`,
-		padding: '0 4px',
+		[theme.breakpoints.down('lg')]: {
+			width: '15ch',
+		},
 	},
 }));
 
@@ -88,12 +81,14 @@ const pages = [
 	{ name: 'Auman', href: '/auman' },
 	{ name: 'Thaco towner', href: '/thaco-towner' },
 ];
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
 	const user: UserData | null | string = useAuth();
 	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+	const [searchOpen, setSearchOpen] = useState(false);
 	const router = useRouter();
 	const [userData, setUserData] = useState<null | UserData>(null);
 	const { sessionToken, setSessionToken } = useAppContext();
@@ -128,8 +123,6 @@ function Header() {
 					console.error('No session token found');
 					return;
 				}
-
-				console.log('Using session token:', sessionToken);
 
 				const response = await fetch(`${envConfig.NEXT_PUBLIC_API_ENDPOINT}/api/auth/me`, {
 					headers: {
@@ -168,12 +161,14 @@ function Header() {
 
 	return (
 		<div>
-			<div className='p-4 bg-[#00529C] flex items-center justify-center text-center text-white text-xs font-semibold'>
-				<h3 className='flex-1 text-right'>THACO TP HỒ CHÍ MINH</h3>
-				<div className='w-[50%]'>
-					<span className='inline-block p-2 rounded-full bg-slate-500 hover:bg-[#20466D] cursor-pointer'>
-						📶 <a href='tel: 0739989099'>0739 989 099</a>
-					</span>
+			<div className='p-4 bg-[#00529C] text-center text-white text-xs font-semibold'>
+				<div className='container flex items-center justify-between'>
+					<h3 className='text-lg'>THACO TP HỒ CHÍ MINH</h3>
+					<div className='flex justify-center w-fit'>
+						<span className='inline-block p-2 rounded-full bg-slate-500 hover:bg-[#20466D] cursor-pointer'>
+							📶 <a href='tel:0739989099'>0739 989 099</a>
+						</span>
+					</div>
 				</div>
 			</div>
 			<AppBar
@@ -182,17 +177,17 @@ function Header() {
 				className='relative p-2 z-20 text-[#00529C]'
 			>
 				<Container maxWidth='xl'>
-					<Toolbar disableGutters className='container flex justify-between items-center'>
+					<Toolbar disableGutters className='flex items-center justify-between container'>
 						<Link href='/'>
-							<Box sx={{ display: 'flex', alignItems: 'center' }}>
-								<Image src='/logo.png' width={200} height={100} alt='logo' />
+							<Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
+								<Image src='/logo.png' width={150} height={75} alt='logo' />
 							</Box>
 						</Link>
 
-						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+						<Box sx={{ flexGrow: 1, display: { xs: 'flex', lg: 'none' } }}>
 							<IconButton
 								size='large'
-								aria-label='account of current user'
+								aria-label='menu'
 								aria-controls='menu-appbar'
 								aria-haspopup='true'
 								onClick={handleOpenNavMenu}
@@ -215,7 +210,7 @@ function Header() {
 								open={Boolean(anchorElNav)}
 								onClose={handleCloseNavMenu}
 								sx={{
-									display: { xs: 'block', md: 'none' },
+									display: { xs: 'block', lg: 'none' },
 								}}
 							>
 								{pages.map((page) => (
@@ -228,8 +223,8 @@ function Header() {
 							</Menu>
 						</Box>
 
-						<Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
-							{pages.map((page, index) => (
+						<Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 2 }}>
+							{pages.map((page) => (
 								<Link key={page.name} href={page.href}>
 									<Button
 										onClick={handleCloseNavMenu}
@@ -239,6 +234,12 @@ function Header() {
 											display: 'block',
 											fontWeight: 'bold',
 											fontSize: 16,
+											textTransform: 'uppercase',
+											'&:hover': {
+												color: '#fff',
+												backgroundColor: '#00529C',
+												transition: 'color 0.3s ease, background-color 0.3s ease',
+											},
 										}}
 									>
 										{page.name}
@@ -247,21 +248,94 @@ function Header() {
 							))}
 						</Box>
 
-						<Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-							<Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-								<Search>
-									<SearchIconWrapper>
-										<SearchIcon />
-									</SearchIconWrapper>
-									<StyledInputBase
-										placeholder='Search…'
-										inputProps={{ 'aria-label': 'search' }}
-										className='placeholder:text-white'
+						<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+							{/* Search or Button Toggle */}
+							<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'center' }}>
+								{searchOpen ? (
+									<Search>
+										<SearchIconWrapper>
+											<SearchIcon />
+										</SearchIconWrapper>
+										<StyledInputBase
+											placeholder='Search…'
+											inputProps={{ 'aria-label': 'search' }}
+											className='placeholder:text-white'
+										/>
+									</Search>
+								) : (
+									<SearchIcon
+										sx={{ display: { xs: 'flex', md: 'none' } }}
+										onClick={() => setSearchOpen(true)}
 									/>
-								</Search>
+								)}
 							</Box>
 
-							<Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+							{/* Show Sign In Button only on small screens */}
+							<Box sx={{ display: { xs: 'flex', lg: 'none' }, gap: 1 }}>
+								{user ? (
+									<Box sx={{ display: 'flex', alignItems: 'center', gap: '1.4rem' }}>
+										<Tooltip title='Open settings'>
+											<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+												<Avatar
+													alt={(user as unknown as UserData)?.fullname || 'User'}
+													src='/static/images/avatar/2.jpg'
+												/>
+											</IconButton>
+										</Tooltip>
+										<Menu
+											sx={{ mt: '45px' }}
+											id='menu-appbar'
+											anchorEl={anchorElUser}
+											anchorOrigin={{
+												vertical: 'top',
+												horizontal: 'right',
+											}}
+											keepMounted
+											transformOrigin={{
+												vertical: 'top',
+												horizontal: 'right',
+											}}
+											open={Boolean(anchorElUser)}
+											onClose={handleCloseUserMenu}
+										>
+											{settings.map((setting, index) => (
+												<MenuItem
+													key={setting}
+													onClick={
+														index === settings.length - 1
+															? handleLogout
+															: handleCloseUserMenu
+													}
+												>
+													<Typography textAlign='center'>{setting}</Typography>
+												</MenuItem>
+											))}
+										</Menu>
+									</Box>
+								) : (
+									<Link href='/login'>
+										<Button
+											variant='contained'
+											color='info'
+											sx={{
+												px: 2,
+												backgroundColor: '#007BFF',
+												'&:hover': {
+													backgroundColor: '#0056b3',
+													transition: 'background-color 0.3s ease',
+												},
+												fontWeight: 'bold',
+												textTransform: 'none',
+											}}
+										>
+											Sign In
+										</Button>
+									</Link>
+								)}
+							</Box>
+
+							{/* Show Sign Up Button only on larger screens */}
+							<Box sx={{ display: { xs: 'none', lg: 'flex' }, alignItems: 'center', gap: 1 }}>
 								{user ? (
 									<Box sx={{ display: 'flex', alignItems: 'center', gap: '1.4rem' }}>
 										<Tooltip title='Open settings'>
@@ -305,13 +379,39 @@ function Header() {
 								) : (
 									<>
 										<Link href='/login'>
-											<Button variant='contained' color='info'>
-												Sign In
+											<Button
+												variant='contained'
+												color='info'
+												sx={{
+													px: 2,
+													backgroundColor: '#007BFF',
+													'&:hover': {
+														backgroundColor: '#0056b3',
+														transition: 'background-color 0.3s ease',
+													},
+													fontWeight: 'bold',
+													textTransform: 'none',
+												}}
+											>
+												Đăng nhập
 											</Button>
 										</Link>
 										<Link href='/register'>
-											<Button variant='contained' color='info'>
-												Sign Up
+											<Button
+												variant='contained'
+												color='info'
+												sx={{
+													px: 2,
+													backgroundColor: '#28A745',
+													'&:hover': {
+														backgroundColor: '#218838',
+														transition: 'background-color 0.3s ease',
+													},
+													fontWeight: 'bold',
+													textTransform: 'none',
+												}}
+											>
+												Đăng ký
 											</Button>
 										</Link>
 									</>

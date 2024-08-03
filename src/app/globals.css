@@ -110,17 +110,24 @@
 	}
 }
 
+.container-lg {
+	width: 100%;
+	max-width: 123rem;
+	height: 100%;
+	margin: 0 auto;
+	padding: 0 1.5rem;
+	position: relative;
+}
+
 .swiper {
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 }
 
 .swiper-slide {
 	text-align: center;
 	font-size: 18px;
-	background: #fff;
 
-	/* Center slide text vertically */
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -129,7 +136,7 @@
 .swiper-slide img {
 	display: block;
 	width: 100%;
-	height: 750px;
+	height: 700px;
 	object-fit: cover;
 	transform: scale(0.9);
 	border-radius: 8px;
@@ -176,4 +183,30 @@
 .swiper-slide.swiper-slide-prev .swiper-zoom-container img {
 	opacity: 0.5;
 	transition: opacity 0.5s ease;
+}
+
+/* Keyframes for fade-up animation */
+@keyframes fadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Initial state of items (hidden and positioned) */
+.fade-up {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* State when items are visible (applied through JavaScript) */
+.fade-up.visible {
+	opacity: 1;
+	transform: translateY(0);
+	animation: fadeUp 0.6s ease-out forwards;
 }
