@@ -1,6 +1,7 @@
 'use client';
 import { getAllProducts } from '@/app/api/product/getProducts';
 import Banner from '@/pages/home/Banner';
+import Brand from '@/pages/home/Brand';
 import Features from '@/pages/home/Features';
 import { Product } from '@/types/product';
 import { CircularProgress } from '@mui/material';
@@ -57,9 +58,10 @@ export default function Home() {
 	return (
 		<div className='relative'>
 			<Banner />
+			<Brand />
 			<Features title='Xe tải KIA' products={electronics5Products} />
-			<Features title='Xe van thaco frontier' products={electronics7Products} />
-			<Features title='THACO FRONTIER' products={electronics6Products} />
+			{/* <Features title='Xe van thaco frontier' products={electronics7Products} /> */}
+			{/* <Features title='THACO FRONTIER' products={electronics6Products} /> */}
 		</div>
 	);
 }

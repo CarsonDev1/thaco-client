@@ -1,58 +1,24 @@
 'use client';
 import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import { FreeMode, Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
 
 const Banner = () => {
 	return (
-		<div className='relative pt-4'>
-			<Swiper
-				spaceBetween={10}
-				slidesPerView={2}
-				centeredSlides={true}
-				pagination={{
-					clickable: true,
-				}}
-				loop={true}
-				autoplay={{
-					delay: 4500,
-					disableOnInteraction: false,
-				}}
-				modules={[Pagination, Autoplay]}
-				breakpoints={{
-					850: {
-						slidesPerView: 1.5,
-					},
-					0: {
-						slidesPerView: 1,
-					},
-				}}
-			>
-				<SwiperSlide>
-					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-01.jpg' width={2000} height={900} alt='car' />
-					</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-02.jpg' width={2000} height={900} alt='car' />
-					</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-03.jpg' width={2000} height={900} alt='car' />
-					</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='swiper-zoom-container'>
-						<Image src='/banner-car-02.jpg' width={2000} height={900} alt='car' />
-					</div>
-				</SwiperSlide>
-			</Swiper>
+		<div className='relative h-[500px] lg:h-[700px]'>
+			{/* Background Video */}
+			<video autoPlay loop muted className='absolute inset-0 w-full h-full object-cover'>
+				<source src='/home/video-banner.mp4' type='video/mp4' />
+				Your browser does not support the video tag.
+			</video>
+
+			{/* Overlay Content */}
+			<div className='absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4'>
+				<h1 className='text-4xl lg:text-6xl font-bold mb-4'>Your Stunning Headline</h1>
+				<p className='text-lg lg:text-2xl mb-6'>A compelling subheading that grabs attention.</p>
+				<button className='px-6 py-3 bg-blue-600 hover:bg-blue-800 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105'>
+					Call to Action
+				</button>
+			</div>
 		</div>
 	);
 };
